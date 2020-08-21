@@ -5,6 +5,7 @@ const knex = require('../databases')
 module.exports = {
    async index(req, res) {
             const result =  await knex('users')
+            .where('deleted_at' , null)
 
             return res.json(result)
     },
@@ -42,8 +43,7 @@ module.exports = {
         try {
            await knex('users')
             .where({id})
-            .del()
-
+            .update('deleted_at' , new Date)
             return res.send('ok')
         } catch (error) {
             
