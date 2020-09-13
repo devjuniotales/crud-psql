@@ -10,25 +10,35 @@ module.exports = {
             return res.json(result)
     },
     async create(req, res) {
-        const {username} = req.body;
+        const {email,name,phone, password,address,number,zipcode, country} = req.body;
 
       try {
            await knex('users').insert({
-                username
+               email,
+               name,
+               password,
+               address,
+               phone,
+               number,
+               zipcode,
+               country
             })
-    
-            return res.json(result)
+
+            return res.json("Cadastro Efetuado com Sucesso!")
       } catch (error) {
           res.status(400).send(error)
       }
     },
     async update(req,res) {
-            const {id} = req.params
-            const {username} = req.body;
+            const {id} = req.params;
+            const {name,tel, email , password, address, number,zipcode,country} = req.body;
 
         try {
              await knex('users')
-            .update({username})
+            .update({
+                name,tel, email , password, address, number,zipcode,country
+            
+            })
             .where({id})
 
             return res.send('ok')

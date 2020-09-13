@@ -16,7 +16,7 @@ module.exports = {
             .select('projects.*', 'users.username')
             .where('users.deleted_at',null)
 
-            // contar os projetos daquele usuario
+            // contar os projetos daquele usuário
             countObj
             .where({user_id})
         }
