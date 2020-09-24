@@ -13,7 +13,7 @@ module.exports = {
             query
             .where({user_id})
             .join('users', 'users.id', '=' ,'projects.user_id')
-            .select('projects.*', 'users.username')
+            .select('projects.*', 'users.name')
             .where('users.deleted_at',null)
 
             // contar os projetos daquele usuário
@@ -30,7 +30,15 @@ module.exports = {
         res.json(result)
     },
     async create ( req, res) {
-        const {user_id , title} = req.body; 
+        const {
+            user_id,
+            nameProd,
+            uniProd,
+            descProd,
+            priceProd,
+            statusProd,
+            payProd
+            } = req.body; 
 
         await knex('projects').insert({
             user_id,
