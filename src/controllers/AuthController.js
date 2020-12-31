@@ -15,7 +15,7 @@ module.exports = {
                  res.status(401).send({error : 'Email não cadastrado!'})
             }
 
-            const userValidPassword = await bcrypt.compareSync(password,user.password)
+            const userValidPassword = await bcrypt.compareSync(password, user.password)
 
             if(!userValidPassword){
                 res.status(401).send({error: "Usuário ou senha inválido"})
