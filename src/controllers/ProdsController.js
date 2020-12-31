@@ -1,3 +1,4 @@
+const { select } = require("../databases");
 const knex = require("../databases")
 
 
@@ -11,7 +12,7 @@ module.exports = {
         .select('prods.*')
         const countObj = knex('prods').count()
 
-         const [count] = await countObj   
+        const [count] = await countObj   
         res.header('x-total-count', count['count'])
         
         const result = await query
@@ -38,5 +39,44 @@ module.exports = {
             payProd
         })
         res.json('ok')
+    },
+    async delete (req, res) {
+        const {id} = req.params;
+
+        await knex('prods')
+        .where({id})
+        .del()
+        
+        return res.status(200).send('deletado')
+    },
+    async update (req, res) {
+        const {id} = req.params;
+        const {
+            nameProd,
+            uniProd,
+            descProd,
+            priceProd,
+            statusProd,
+            payProd
+        }=req.body;
+
+        try {
+        await knex('prods')
+        .update({
+            nameProd,
+            uniProd,
+            descProd,
+            priceProd,
+            statusProd,
+            payProd
+        })
+        .where({id})
+        res.status(200).send('Produto atualizado')
+    } catch (error) {
+        res.status(401).send('Error...')
+        console.log(error)
+    }
+        
+
     }
 }

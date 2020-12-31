@@ -1,5 +1,5 @@
-
 const knex = require('../databases')
+const bcrypt = require('bcrypt')
 
 
 module.exports = {
@@ -10,18 +10,13 @@ module.exports = {
             return res.json(result)
     },
     async create(req, res) {
-        const {email,name,phone, password,address,number,zipcode, country} = req.body;
+        const {email,password} = req.body;
 
+    let hash = bcrypt.hashSync(password,10)
       try {
            await knex('users').insert({
                email,
-               name,
-               password,
-               address,
-               phone,
-               number,
-               zipcode,
-               country
+               password : hash
             })
 
             return res.json("Cadastro Efetuado com Sucesso!")
@@ -31,12 +26,12 @@ module.exports = {
     },
     async update(req,res) {
             const {id} = req.params;
-            const {name,tel, email , password, address, number,zipcode,country} = req.body;
+            const {email , password} = req.body;
 
         try {
              await knex('users')
             .update({
-                name,tel, email , password, address, number,zipcode,country
+              email , password
             
             })
             .where({id})
