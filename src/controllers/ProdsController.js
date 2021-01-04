@@ -1,4 +1,3 @@
-const { select } = require("../databases");
 const knex = require("../databases")
 
 

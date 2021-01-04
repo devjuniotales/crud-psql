@@ -6,8 +6,11 @@ exports.up = async knex => knex.schema.createTable('users', table => {
 
     table.text('email').unique().notNullable()
     table.string('password').notNullable()
+
+    table.boolean('verify').notNullable().defaultTo(false)
     
     table.timestamps(true, true)
+
 
 }).then(() => knex.raw(onUpdateTrigger('users'))) 
 
